@@ -31,7 +31,7 @@ int CTestFSM::OnStand(CFSM_EVT e)
 {
 	cout << "(서있음.)\r\n";
 
-	BEGIN_EVT_MAP(e)
+	BEGIN_EVT_MAP(e) //이벤트 시작
 
 		ONEVENT(CTestFSM::evtCoinDrop) //서있는 상태로 해당 이벤트 발생시
 		cout << "돈떨어졌다. 앉아야겠다.\r\n"; // 문장출력후
@@ -45,27 +45,27 @@ int CTestFSM::OnStand(CFSM_EVT e)
 		cout << "비온다...!!\r\n"; // 해당 문장을 출력후
 	PASS_EVT(&CTestFSM::OnRun) // 행동 상태를 달리는 상태로 변경
 
-	END_EVT_MAP //
+	END_EVT_MAP //이벤트 종료
 
 	return CFSM::COMPLETE; //처리 완료
 }
 // 뛰는 상태
 int CTestFSM::OnRun(CFSM_EVT e)
 {
-	cout << "(뛰는중.)\r\n";
+	cout << "(뛰는중.)\r\n"; 
 
 	BEGIN_EVT_MAP(e)
 
-		ONEVENT(CTestFSM::evtCoinDrop)
-		cout << "무슨소리지..?\r\n";
-	PASS_EVT(&CTestFSM::OnStop)
+		ONEVENT(CTestFSM::evtCoinDrop) //뛰는 상태로 해당 이벤트 발생시
+		cout << "무슨소리지..?\r\n"; //문장 출력
+	PASS_EVT(&CTestFSM::OnStop) //정지 상태로 전환
 
-		ONEVENT(CTestFSM::evtSomeoneAskMe)
-		cout << "엇. 말시키네..?..?\r\n";
-	PASS_EVT(&CTestFSM::OnStop)
+		ONEVENT(CTestFSM::evtSomeoneAskMe) //뛰는 상태로 해당 이벤트 발생시
+		cout << "엇. 말시키네..?..?\r\n"; //문장 출력
+	PASS_EVT(&CTestFSM::OnStop) //정지 상태로 전환
 
-		ONEVENT(CTestFSM::evtRainDrop)
-		cout << "계속 뛴다.\r\n";
+		ONEVENT(CTestFSM::evtRainDrop) //뛰는 상태로 해당 이벤트 발생시
+		cout << "계속 뛴다.\r\n"; //문장출력
 	END_EVT
 
 	END_EVT_MAP
@@ -80,18 +80,18 @@ int CTestFSM::OnSit(CFSM_EVT e)
 
 	BEGIN_EVT_MAP(e)
 
-		ONEVENT(CTestFSM::evtCoinDrop)
-		cout << "돈줍고 일어서자.\r\n";
-	STATE(&CTestFSM::OnStand)
-		END_EVT
+		ONEVENT(CTestFSM::evtCoinDrop) //앉은 상태로 해당 이벤트 발생시 
+		cout << "돈줍고 일어서자.\r\n"; // 문장 출력
+	STATE(&CTestFSM::OnStand)//서있는 상태로 전환
+		END_EVT //이벤트 종료
 
-		ONEVENT(CTestFSM::evtSomeoneAskMe)
-		cout << ">>일어난다.\r\n";
-	PASS_EVT(&CTestFSM::OnStand)
+		ONEVENT(CTestFSM::evtSomeoneAskMe)//앉은 상태로 해당 이벤트 발생시
+		cout << ">>일어난다.\r\n"; // 문장 출력후
+	PASS_EVT(&CTestFSM::OnStand)//서있는 상태로 전환
 
-		ONEVENT(CTestFSM::evtRainDrop)
-		cout << ">>일어난다.";
-	PASS_EVT(&CTestFSM::OnStand)
+		ONEVENT(CTestFSM::evtRainDrop)//앉은 상태로 해당 이벤트 발생시
+		cout << ">>일어난다."; // 문장 출력후
+	PASS_EVT(&CTestFSM::OnStand)// 서있는 상태로 전환
 
 	END_EVT_MAP
 
@@ -105,13 +105,13 @@ int CTestFSM::OnStop(CFSM_EVT e)
 
 	BEGIN_EVT_MAP(e)
 
-		ONEVENT(CTestFSM::evtCoinDrop)
-		cout << ">>서서생각해보자 !!\r\n";
-	PASS_EVT(&CTestFSM::OnStand)
+		ONEVENT(CTestFSM::evtCoinDrop) //멈춘 상태로 해당이벤트 발생시
+		cout << ">>서서생각해보자 !!\r\n";//문장 출력 후
+	PASS_EVT(&CTestFSM::OnStand)// 서있는 상태로 전환
 
-		ONEVENT(CTestFSM::evtSomeoneAskMe)
-		cout << ">>서서생각해보자 !!\r\n";
-	PASS_EVT(&CTestFSM::OnStand)
+		ONEVENT(CTestFSM::evtSomeoneAskMe)// 멈춘 상태로 해당이벤트 발생시
+		cout << ">>서서생각해보자 !!\r\n";// 문장 출력 후
+	PASS_EVT(&CTestFSM::OnStand)//서있는 상태로 전환
 
 	END_EVT_MAP
 
@@ -136,7 +136,7 @@ int main(int argc, char** argv)
 	f.DoEvent(e);
 
 	cout << ">>>>>>>누가물어봄 \r\n";
-	e.EVT = CTestFSM::evtSomeoneAskMe; //
+	e.EVT = CTestFSM::evtSomeoneAskMe; 
 	f.DoEvent(e);
 
 	return 0;
